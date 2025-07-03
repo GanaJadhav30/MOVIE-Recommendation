@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Search from './components/Search'
 import Spinner from './components/Spinner'
-
+import MovieCard from './components/MovieCard'
 
 
 
@@ -27,6 +27,7 @@ const App = () =>{
    const [fetchingError, setfetchingError] = useState('')
    const [movieList, setmovieList] = useState([])
    const [isLoading, setisLoading] = useState(false)
+
    const fetchMovies = async () =>{
 
       setisLoading(true)
@@ -42,7 +43,7 @@ const App = () =>{
          }
 
          const data = await response.json();
-         console.log(data)
+         console.log(data.results)
 
          if(data.Response ==="False"){
             setfetchingError(data.Error || 'failed to fetch movies')
@@ -81,7 +82,8 @@ const App = () =>{
             ):(
                <ul>
                   {movieList.map((movie)=>(
-               <p key={movie.id} className='text-white'>{movie.title}</p>))}
+                  <MovieCard key={movie.id} movie={movie} />
+               ))}
                </ul>)}
 
            </section>
