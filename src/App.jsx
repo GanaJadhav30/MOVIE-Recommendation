@@ -6,7 +6,7 @@ import Search from './components/Search'
 import Spinner from './components/Spinner'
 import MovieCard from './components/MovieCard'
 import {useDebounce} from 'react-use'
-
+import { UpdateSearchTerm } from './appwrite'
 
 
 const API_BASE_URL = 'https://api.themoviedb.org/3' 
@@ -54,6 +54,9 @@ const App = () =>{
             return
          }
          setmovieList(data.results || [])
+         if(query && data.results.length > 0){
+            await UpdateSearchTerm(query,data.results[0])
+         }
 
       } catch (error) {
          console.log(`Fetching error :${error}`)
